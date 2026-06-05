@@ -1,0 +1,32 @@
+{
+  "name": "pkg-observatory",
+  "version": "0.1.0",
+  "description": "Turn an npm package's history into an embeddable SVG story",
+  "keywords": ["npm", "package", "history", "svg", "visualization", "readme"],
+  "license": "MIT",
+  "bin": {
+    "pkg-observatory": "./dist/cli.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist", "public"],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/server.ts",
+    "start": "node dist/server.js",
+    "cli": "tsx src/cli.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "tar": "^7.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/tar": "^6.1.13",
+    "tsx": "^4.16.0",
+    "typescript": "^5.5.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>pkg-observatory — npm package history visualizer</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #21262d;
+    --border: #30363d;
+    --text: #c9d1d9;
+    --text-sec: #8b949e;
+    --text-muted: #6e7681;
+    --blue: #58a6ff;
+    --green: #3fb950;
+    --yellow: #d29922;
+    --red: #f85149;
+    --purple: #bc8cff;
+    --radius: 6px;
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  header h1 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  header h1 .icon { font-size: 20px; }
+
+  header p {
+    margin: 0;
+    color: var(--text-sec);
+    font-size: 13px;
+  }
+
+  .header-right {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 24px;
+  }
+
+  .search-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+
+  .search-card h2 {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 16px;
+    color: var(--text);
+  }
+
+  .search-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .search-row input[type="text"] {
+    flex: 1;
+    min-width: 200px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-size: 14px;
+    font-family: var(--mono);
+    padding: 8px 12px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .search-row input[type="text"]:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(88,166,255,0.12);
+  }
+
+  .btn {
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 18px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    white-space: nowrap;
+  }
+  .btn:hover { opacity: 0.85; }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-ghost {
+    background: var(--surface2);
+    color: var(--text-sec);
+    border: 1px solid var(--border);
+  }
+  .btn-green { background: var(--green); }
+  .btn-sm { font-size: 12px; padding: 5px 12px; }
+
+  .options-row {
+    margin-top: 12px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .option-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-sec);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .option-label input[type="checkbox"] { accent-color: var(--blue); }
+
+  .option-input {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-sec);
+  }
+
+  .option-input input[type="number"] {
+    width: 60px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    font-size: 12px;
+    padding: 3px 7px;
+    outline: none;
+  }
+
+  .examples {
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .examples a {
+    color: var(--blue);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .examples a:hover { text-decoration: underline; }
+
+  /* Pipeline stages */
+  .pipeline-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 24px;
+    display: none;
+  }
+
+  .pipeline-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .spinner {
+    width: 14px; height: 14px;
+    border: 2px solid var(--border);
+    border-top-color: var(--blue);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .stage-list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .stage-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-sec);
+    transition: background 0.15s;
+  }
+
+  .stage-item:last-child { border-bottom: none; }
+  .stage-item.active { background: rgba(88,166,255,0.06); color: var(--text); }
+  .stage-item.done { color: var(--green); }
+  .stage-item.error { color: var(--red); }
+
+  .stage-icon { width: 16px; text-align: center; flex-shrink: 0; }
+  .stage-msg { flex: 1; }
+  .stage-time { color: var(--text-muted); font-family: var(--mono); font-size: 11px; }
+
+  /* Source status badges */
+  .source-status {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 10px 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .source-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-size: 11px;
+    border: 1px solid transparent;
+  }
+  .source-badge.ok { background: rgba(63,185,80,0.1); border-color: rgba(63,185,80,0.3); color: var(--green); }
+  .source-badge.partial { background: rgba(210,153,34,0.1); border-color: rgba(210,153,34,0.3); color: var(--yellow); }
+  .source-badge.unavailable { background: rgba(110,118,129,0.1); border-color: var(--border); color: var(--text-muted); }
+  .source-badge.error { background: rgba(248,81,73,0.1); border-color: rgba(248,81,73,0.3); color: var(--red); }
+  .source-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+  /* Result */
+  .result-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: none;
+  }
+
+  .result-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .result-header h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+    flex: 1;
+  }
+
+  .svg-preview {
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    overflow-x: auto;
+  }
+
+  .svg-preview img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+
+  .caveats {
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+    background: rgba(210,153,34,0.05);
+  }
+
+  .caveats h4 {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--yellow);
+    margin: 0 0 6px;
+  }
+
+  .caveats ul {
+    margin: 0;
+    padding-left: 20px;
+    font-size: 12px;
+    color: var(--text-sec);
+  }
+
+  .caveats li { margin-bottom: 4px; }
+
+  .error-banner {
+    background: rgba(248,81,73,0.1);
+    border: 1px solid rgba(248,81,73,0.3);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    color: var(--red);
+    font-size: 13px;
+    margin-bottom: 24px;
+    display: none;
+  }
+
+  code {
+    font-family: var(--mono);
+    font-size: 12px;
+    background: var(--surface2);
+    padding: 2px 5px;
+    border-radius: 4px;
+    color: var(--purple);
+  }
+
+  .cli-section {
+    margin-top: 32px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+
+  .cli-section h3 { font-size: 14px; font-weight: 600; margin: 0 0 12px; }
+  .cli-section pre {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 12px;
+    font-size: 13px;
+    font-family: var(--mono);
+    color: var(--text-sec);
+    overflow-x: auto;
+    margin: 0;
+  }
+  .cli-section pre .cmd { color: var(--green); }
+  .cli-section pre .comment { color: var(--text-muted); }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1><span class="icon">🔭</span> pkg-observatory</h1>
+    <p>Turn an npm package's history into a single embeddable SVG</p>
+  </div>
+  <div class="header-right">size · deps · format · adoption · over every release</div>
+</header>
+
+<main>
+  <div class="search-card">
+    <h2>Analyze a package</h2>
+    <div class="search-row">
+      <input type="text" id="pkg-input" placeholder="react, lodash, ms, @types/node…" autocomplete="off" spellcheck="false">
+      <button class="btn" id="analyze-btn" onclick="analyze()">Generate SVG</button>
+    </div>
+    <div class="options-row">
+      <label class="option-label">
+        <input type="checkbox" id="opt-skip-tarballs">
+        Skip tarball download <span style="color:var(--text-muted)">(faster, less accurate size)</span>
+      </label>
+      <label class="option-label">
+        <input type="checkbox" id="opt-skip-bundlephobia" checked>
+        Skip bundlephobia
+      </label>
+      <label class="option-label">
+        <input type="checkbox" id="opt-no-cache">
+        No cache
+      </label>
+      <div class="option-input">
+        Max versions:
+        <input type="number" id="opt-max-versions" value="" min="5" max="999" placeholder="all">
+      </div>
+    </div>
+    <div class="examples">
+      Examples:
+      <a onclick="setExample('ms')">ms</a> ·
+      <a onclick="setExample('axios')">axios</a> ·
+      <a onclick="setExample('react')">react</a> ·
+      <a onclick="setExample('lodash')">lodash</a> ·
+      <a onclick="setExample('chalk')">chalk</a> ·
+      <a onclick="setExample('tsup')">tsup</a>
+    </div>
+  </div>
+
+  <div class="error-banner" id="error-banner"></div>
+
+  <div class="pipeline-card" id="pipeline-card">
+    <div class="pipeline-header">
+      <div class="spinner" id="pipeline-spinner"></div>
+      <span id="pipeline-title">Analyzing…</span>
+    </div>
+    <ul class="stage-list" id="stage-list"></ul>
+    <div class="source-status" id="source-status" style="display:none"></div>
+  </div>
+
+  <div class="result-card" id="result-card">
+    <div class="result-header">
+      <h3 id="result-title">Result</h3>
+      <button class="btn btn-green btn-sm" id="dl-svg-btn" onclick="downloadSVG()">⬇ Download SVG</button>
+      <button class="btn btn-ghost btn-sm" id="dl-json-btn" onclick="downloadJSON()">⬇ Download JSON</button>
+    </div>
+    <div class="svg-preview" id="svg-preview"></div>
+    <div class="caveats" id="caveats-section" style="display:none">
+      <h4>⚠ Data caveats</h4>
+      <ul id="caveats-list"></ul>
+    </div>
+  </div>
+
+  <div class="cli-section">
+    <h3>CLI usage</h3>
+    <pre><span class="comment"># npx (no install required)</span>
+<span class="cmd">npx pkg-observatory</span> react <span class="cmd">--out</span> react.svg
+
+<span class="comment"># Skip tarball download for large packages</span>
+<span class="cmd">npx pkg-observatory</span> lodash <span class="cmd">--skip-tarballs --out</span> lodash.svg
+
+<span class="comment"># Dump the timeline JSON for auditing</span>
+<span class="cmd">npx pkg-observatory</span> axios <span class="cmd">--json | jq '.summary'</span>
+
+<span class="comment"># With GitHub token for higher rate limits</span>
+<span class="cmd">npx pkg-observatory</span> react <span class="cmd">--github-token</span> ghp_xxxx <span class="cmd">--out</span> react.svg</pre>
+  </div>
+</main>
+
+<script>
+let currentJobId = null;
+let currentEventSource = null;
+
+function setExample(pkg) {
+  document.getElementById('pkg-input').value = pkg;
+  document.getElementById('pkg-input').focus();
+}
+
+function showError(msg) {
+  const el = document.getElementById('error-banner');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+function clearError() {
+  document.getElementById('error-banner').style.display = 'none';
+}
+
+function addStageEvent(ev) {
+  const list = document.getElementById('stage-list');
+  const id = `stage-${ev.stage}-${ev.ts}`;
+
+  // Remove any prior active/spinner items for this stage
+  const existing = document.querySelector(`[data-stage="${ev.stage}"]`);
+  if (existing) {
+    existing.remove();
+  }
+
+  const li = document.createElement('li');
+  li.className = `stage-item ${ev.type === 'error' ? 'error' : ev.type === 'done' ? 'done' : 'active'}`;
+  li.dataset.stage = ev.stage;
+
+  const icon = ev.type === 'error' ? '✗' : ev.type === 'done' ? '✓' : '→';
+  li.innerHTML = `
+    <span class="stage-icon">${icon}</span>
+    <span class="stage-msg">${escHtml(ev.message)}</span>
+    <span class="stage-time">${new Date(ev.ts).toLocaleTimeString()}</span>`;
+
+  list.appendChild(li);
+  li.scrollIntoView({ block: 'nearest' });
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+async function analyze() {
+  const pkg = document.getElementById('pkg-input').value.trim();
+  if (!pkg) return;
+
+  clearError();
+
+  // Close any previous stream
+  if (currentEventSource) { currentEventSource.close(); currentEventSource = null; }
+
+  // Reset UI
+  const pipelineCard = document.getElementById('pipeline-card');
+  const resultCard = document.getElementById('result-card');
+  const stageList = document.getElementById('stage-list');
+  const sourceStatus = document.getElementById('source-status');
+  const spinner = document.getElementById('pipeline-spinner');
+
+  pipelineCard.style.display = 'block';
+  resultCard.style.display = 'none';
+  stageList.innerHTML = '';
+  sourceStatus.style.display = 'none';
+  sourceStatus.innerHTML = '';
+  spinner.style.display = '';
+  document.getElementById('pipeline-title').textContent = `Analyzing ${pkg}…`;
+
+  const analyzeBtn = document.getElementById('analyze-btn');
+  analyzeBtn.disabled = true;
+
+  const body = {
+    pkg,
+    skipTarballs: document.getElementById('opt-skip-tarballs').checked,
+    skipBundlephobia: document.getElementById('opt-skip-bundlephobia').checked,
+    noCache: document.getElementById('opt-no-cache').checked,
+  };
+  const mv = parseInt(document.getElementById('opt-max-versions').value, 10);
+  if (!isNaN(mv) && mv > 0) body.maxVersions = mv;
+
+  // Start job
+  let jobId;
+  try {
+    const res = await fetch('/api/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json();
+    if (!res.ok) { showError(data.error || 'Server error'); analyzeBtn.disabled = false; return; }
+    jobId = data.jobId;
+    currentJobId = jobId;
+  } catch (e) {
+    showError('Failed to connect to server. Is pkg-observatory running?');
+    analyzeBtn.disabled = false;
+    return;
+  }
+
+  // Subscribe to SSE stream
+  const es = new EventSource(`/api/stream/${jobId}`);
+  currentEventSource = es;
+
+  es.onmessage = (e) => {
+    const ev = JSON.parse(e.data);
+    addStageEvent(ev);
+
+    if (ev.type === 'done') {
+      onJobDone(jobId);
+    } else if (ev.type === 'error') {
+      spinner.style.display = 'none';
+      document.getElementById('pipeline-title').textContent = 'Error';
+      showError(ev.message);
+      analyzeBtn.disabled = false;
+      es.close();
+    }
+  };
+
+  es.addEventListener('close', () => {
+    es.close();
+    analyzeBtn.disabled = false;
+  });
+
+  es.onerror = () => {
+    // Ignore; will reconnect or close
+    analyzeBtn.disabled = false;
+  };
+}
+
+async function onJobDone(jobId) {
+  const spinner = document.getElementById('pipeline-spinner');
+  spinner.style.display = 'none';
+  document.getElementById('pipeline-title').textContent = 'Done';
+
+  // Fetch status for data source info
+  try {
+    const statusRes = await fetch(`/api/status/${jobId}`);
+    // SVG result
+    const svgRes = await fetch(`/api/result/${jobId}/svg`);
+    const svgText = await svgRes.text();
+
+    // Show SVG
+    const preview = document.getElementById('svg-preview');
+    const blob = new Blob([svgText], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    preview.innerHTML = `<img src="${url}" alt="Package history SVG">`;
+
+    document.getElementById('result-title').textContent = `${document.getElementById('pkg-input').value.trim()} — observatory`;
+    document.getElementById('result-card').style.display = 'block';
+    document.getElementById('result-card').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    // Fetch JSON for caveats and source status
+    const jsonRes = await fetch(`/api/result/${jobId}/json`);
+    if (jsonRes.ok) {
+      const timeline = await jsonRes.json();
+      renderSourceStatus(timeline.dataSourceStatus);
+      renderCaveats(timeline.caveats);
+    }
+  } catch (e) {
+    showError('Failed to load result: ' + e.message);
+  }
+
+  document.getElementById('analyze-btn').disabled = false;
+}
+
+function renderSourceStatus(status) {
+  const el = document.getElementById('source-status');
+  el.style.display = 'flex';
+  const labels = {
+    registry: 'npm registry',
+    downloads: 'downloads API',
+    tarballs: 'tarballs',
+    packagephobia: 'packagephobia',
+    bundlephobia: 'bundlephobia',
+    github: 'github',
+  };
+  el.innerHTML = Object.entries(status).map(([key, val]) => `
+    <span class="source-badge ${val}">
+      <span class="dot"></span>
+      ${labels[key] || key}: ${val}
+    </span>`).join('');
+}
+
+function renderCaveats(caveats) {
+  if (!caveats || caveats.length === 0) return;
+  const sec = document.getElementById('caveats-section');
+  const list = document.getElementById('caveats-list');
+  list.innerHTML = caveats.map(c => `<li>${escHtml(c)}</li>`).join('');
+  sec.style.display = 'block';
+}
+
+async function downloadSVG() {
+  if (!currentJobId) return;
+  const res = await fetch(`/api/result/${currentJobId}/svg`);
+  const text = await res.text();
+  const pkg = document.getElementById('pkg-input').value.trim().replace(/[^a-z0-9-]/gi, '-');
+  saveAs(text, `${pkg}-observatory.svg`, 'image/svg+xml');
+}
+
+async function downloadJSON() {
+  if (!currentJobId) return;
+  const res = await fetch(`/api/result/${currentJobId}/json`);
+  const text = await res.text();
+  const pkg = document.getElementById('pkg-input').value.trim().replace(/[^a-z0-9-]/gi, '-');
+  saveAs(text, `${pkg}-timeline.json`, 'application/json');
+}
+
+function saveAs(content, filename, type) {
+  const blob = new Blob([content], { type });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+// Submit on Enter
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('pkg-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') analyze();
+  });
+});
+</script>
+</body>
+</html>
