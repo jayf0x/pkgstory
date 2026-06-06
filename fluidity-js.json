@@ -1,0 +1,975 @@
+{
+  "package": "@jayf0x/fluidity-js",
+  "generatedAt": "2026-06-06T09:10:46.491Z",
+  "versions": [
+    {
+      "version": "0.1.3",
+      "publishDate": "2026-04-18T10:40:11.302Z",
+      "unpackedSize": {
+        "value": 104118,
+        "source": "tarball",
+        "available": true
+      },
+      "gzippedSize": {
+        "value": 30136,
+        "source": "tarball",
+        "available": true
+      },
+      "fileCount": {
+        "value": 5,
+        "source": "tarball",
+        "available": true
+      },
+      "moduleFormat": {
+        "value": "esm",
+        "source": "tarball",
+        "available": true
+      },
+      "hasTypes": {
+        "value": true,
+        "source": "tarball",
+        "available": true
+      },
+      "depCount": {
+        "value": 0,
+        "source": "npm-registry-manifest",
+        "available": true
+      },
+      "peerDepCount": {
+        "value": 2,
+        "source": "npm-registry-manifest",
+        "available": true
+      },
+      "installSize": {
+        "value": null,
+        "source": "unavailable",
+        "available": false
+      },
+      "publishSize": {
+        "value": null,
+        "source": "unavailable",
+        "available": false
+      },
+      "downloadsActiveWindow": {
+        "value": 100,
+        "source": "npm-downloads-range-derived",
+        "available": true
+      },
+      "downloadsActiveWindowIsOpenEnded": false,
+      "annotations": [
+        {
+          "version": "0.1.3",
+          "type": "types_added",
+          "label": "Types added"
+        },
+        {
+          "version": "0.1.3",
+          "type": "treeshaking_enabled",
+          "label": "Tree-shakeable"
+        }
+      ]
+    },
+    {
+      "version": "0.1.4",
+      "publishDate": "2026-04-19T12:10:31.335Z",
+      "unpackedSize": {
+        "value": 101068,
+        "source": "tarball",
+        "available": true
+      },
+      "gzippedSize": {
+        "value": 29167,
+        "source": "tarball",
+        "available": true
+      },
+      "fileCount": {
+        "value": 6,
+        "source": "tarball",
+        "available": true
+      },
+      "moduleFormat": {
+        "value": "esm",
+        "source": "tarball",
+        "available": true
+      },
+      "hasTypes": {
+        "value": true,
+        "source": "tarball",
+        "available": true
+      },
+      "depCount": {
+        "value": 0,
+        "source": "npm-registry-manifest",
+        "available": true
+      },
+      "peerDepCount": {
+        "value": 2,
+        "source": "npm-registry-manifest",
+        "available": true
+      },
+      "installSize": {
+        "value": null,
+        "source": "unavailable",
+        "available": false
+      },
+      "publishSize": {
+        "value": null,
+        "source": "unavailable",
+        "available": false
+      },
+      "downloadsActiveWindow": {
+        "value": 105,
+        "source": "npm-downloads-range-derived",
+        "available": true
+      },
+      "downloadsActiveWindowIsOpenEnded": false,
+      "annotations": []
+    },
+    {
+      "version": "0.1.5",
+      "publishDate": "2026-04-20T09:16:26.913Z",
+      "unpackedSize": {
+        "value": 101345,
+        "source": "tarball",
+        "available": true
+      },
+      "gzippedSize": {
+        "value": 29227,
+        "source": "tarball",
+        "available": true
+      },
+      "fileCount": {
+        "value": 6,
+        "source": "tarball",
+        "available": true
+      },
+      "moduleFormat": {
+        "value": "esm",
+        "source": "tarball",
+        "available": true
+      },
+      "hasTypes": {
+        "value": true,
+        "source": "tarball",
+        "available": true
+      },
+      "depCount": {
+        "value": 0,
+        "source": "npm-registry-manifest",
+        "available": true
+      },
+      "peerDepCount": {
+        "value": 2,
+        "source": "npm-registry-manifest",
+        "available": true
+      },
+      "installSize": {
+        "value": null,
+        "source": "unavailable",
+        "available": false
+      },
+      "publishSize": {
+        "value": null,
+        "source": "unavailable",
+        "available": false
+      },
+      "downloadsActiveWindow": {
+        "value": 183,
+        "source": "npm-downloads-range-derived",
+        "available": true
+      },
+      "downloadsActiveWindowIsOpenEnded": false,
+      "annotations": []
+    },
+    {
+      "version": "0.1.6",
+      "publishDate": "2026-05-09T10:55:20.385Z",
+      "unpackedSize": {
+        "value": 105222,
+        "source": "tarball",
+        "available": true
+      },
+      "gzippedSize": {
+        "value": 30461,
+        "source": "tarball",
+        "available": true
+      },
+      "fileCount": {
+        "value": 6,
+        "source": "tarball",
+        "available": true
+      },
+      "moduleFormat": {
+        "value": "esm",
+        "source": "tarball",
+        "available": true
+      },
+      "hasTypes": {
+        "value": true,
+        "source": "tarball",
+        "available": true
+      },
+      "depCount": {
+        "value": 0,
+        "source": "npm-registry-manifest",
+        "available": true
+      },
+      "peerDepCount": {
+        "value": 2,
+        "source": "npm-registry-manifest",
+        "available": true
+      },
+      "installSize": {
+        "value": null,
+        "source": "unavailable",
+        "available": false
+      },
+      "publishSize": {
+        "value": null,
+        "source": "unavailable",
+        "available": false
+      },
+      "downloadsActiveWindow": {
+        "value": 7,
+        "source": "npm-downloads-range-derived",
+        "available": true
+      },
+      "downloadsActiveWindowIsOpenEnded": false,
+      "annotations": []
+    },
+    {
+      "version": "0.1.7",
+      "publishDate": "2026-05-11T17:21:33.426Z",
+      "unpackedSize": {
+        "value": 106550,
+        "source": "tarball",
+        "available": true
+      },
+      "gzippedSize": {
+        "value": 30815,
+        "source": "tarball",
+        "available": true
+      },
+      "fileCount": {
+        "value": 6,
+        "source": "tarball",
+        "available": true
+      },
+      "moduleFormat": {
+        "value": "esm",
+        "source": "tarball",
+        "available": true
+      },
+      "hasTypes": {
+        "value": true,
+        "source": "tarball",
+        "available": true
+      },
+      "depCount": {
+        "value": 0,
+        "source": "npm-registry-manifest",
+        "available": true
+      },
+      "peerDepCount": {
+        "value": 2,
+        "source": "npm-registry-manifest",
+        "available": true
+      },
+      "installSize": {
+        "value": null,
+        "source": "unavailable",
+        "available": false
+      },
+      "publishSize": {
+        "value": null,
+        "source": "unavailable",
+        "available": false
+      },
+      "downloadsActiveWindow": {
+        "value": 118,
+        "source": "npm-downloads-range-derived",
+        "available": true
+      },
+      "downloadsActiveWindowIsOpenEnded": false,
+      "annotations": []
+    },
+    {
+      "version": "0.2.1",
+      "publishDate": "2026-05-12T10:52:30.760Z",
+      "unpackedSize": {
+        "value": 180296,
+        "source": "tarball",
+        "available": true
+      },
+      "gzippedSize": {
+        "value": 45521,
+        "source": "tarball",
+        "available": true
+      },
+      "fileCount": {
+        "value": 6,
+        "source": "tarball",
+        "available": true
+      },
+      "moduleFormat": {
+        "value": "esm",
+        "source": "tarball",
+        "available": true
+      },
+      "hasTypes": {
+        "value": true,
+        "source": "tarball",
+        "available": true
+      },
+      "depCount": {
+        "value": 1,
+        "source": "npm-registry-manifest",
+        "available": true
+      },
+      "peerDepCount": {
+        "value": 2,
+        "source": "npm-registry-manifest",
+        "available": true
+      },
+      "installSize": {
+        "value": null,
+        "source": "unavailable",
+        "available": false
+      },
+      "publishSize": {
+        "value": null,
+        "source": "unavailable",
+        "available": false
+      },
+      "downloadsActiveWindow": {
+        "value": 174,
+        "source": "npm-downloads-range-derived",
+        "available": true
+      },
+      "downloadsActiveWindowIsOpenEnded": false,
+      "annotations": []
+    },
+    {
+      "version": "0.2.2",
+      "publishDate": "2026-05-26T15:54:16.120Z",
+      "unpackedSize": {
+        "value": 183157,
+        "source": "tarball",
+        "available": true
+      },
+      "gzippedSize": {
+        "value": 46697,
+        "source": "tarball",
+        "available": true
+      },
+      "fileCount": {
+        "value": 6,
+        "source": "tarball",
+        "available": true
+      },
+      "moduleFormat": {
+        "value": "esm",
+        "source": "tarball",
+        "available": true
+      },
+      "hasTypes": {
+        "value": true,
+        "source": "tarball",
+        "available": true
+      },
+      "depCount": {
+        "value": 1,
+        "source": "npm-registry-manifest",
+        "available": true
+      },
+      "peerDepCount": {
+        "value": 2,
+        "source": "npm-registry-manifest",
+        "available": true
+      },
+      "installSize": {
+        "value": null,
+        "source": "unavailable",
+        "available": false
+      },
+      "publishSize": {
+        "value": null,
+        "source": "unavailable",
+        "available": false
+      },
+      "downloadsActiveWindow": {
+        "value": 201,
+        "source": "npm-downloads-range-derived",
+        "available": true
+      },
+      "downloadsActiveWindowIsOpenEnded": false,
+      "annotations": []
+    },
+    {
+      "version": "0.2.3",
+      "publishDate": "2026-06-03T11:29:27.758Z",
+      "unpackedSize": {
+        "value": 197320,
+        "source": "tarball",
+        "available": true
+      },
+      "gzippedSize": {
+        "value": 51637,
+        "source": "tarball",
+        "available": true
+      },
+      "fileCount": {
+        "value": 9,
+        "source": "tarball",
+        "available": true
+      },
+      "moduleFormat": {
+        "value": "esm",
+        "source": "tarball",
+        "available": true
+      },
+      "hasTypes": {
+        "value": true,
+        "source": "tarball",
+        "available": true
+      },
+      "depCount": {
+        "value": 1,
+        "source": "npm-registry-manifest",
+        "available": true
+      },
+      "peerDepCount": {
+        "value": 2,
+        "source": "npm-registry-manifest",
+        "available": true
+      },
+      "installSize": {
+        "value": null,
+        "source": "unavailable",
+        "available": false
+      },
+      "publishSize": {
+        "value": null,
+        "source": "unavailable",
+        "available": false
+      },
+      "downloadsActiveWindow": {
+        "value": 0,
+        "source": "npm-downloads-range-derived",
+        "available": true
+      },
+      "downloadsActiveWindowIsOpenEnded": false,
+      "annotations": []
+    },
+    {
+      "version": "0.2.4",
+      "publishDate": "2026-06-03T14:30:29.955Z",
+      "unpackedSize": {
+        "value": 199751,
+        "source": "tarball",
+        "available": true
+      },
+      "gzippedSize": {
+        "value": 52033,
+        "source": "tarball",
+        "available": true
+      },
+      "fileCount": {
+        "value": 9,
+        "source": "tarball",
+        "available": true
+      },
+      "moduleFormat": {
+        "value": "esm",
+        "source": "tarball",
+        "available": true
+      },
+      "hasTypes": {
+        "value": true,
+        "source": "tarball",
+        "available": true
+      },
+      "depCount": {
+        "value": 1,
+        "source": "npm-registry-manifest",
+        "available": true
+      },
+      "peerDepCount": {
+        "value": 2,
+        "source": "npm-registry-manifest",
+        "available": true
+      },
+      "installSize": {
+        "value": null,
+        "source": "unavailable",
+        "available": false
+      },
+      "publishSize": {
+        "value": null,
+        "source": "unavailable",
+        "available": false
+      },
+      "downloadsActiveWindow": {
+        "value": 0,
+        "source": "npm-downloads-range-derived",
+        "available": true
+      },
+      "downloadsActiveWindowIsOpenEnded": false,
+      "annotations": []
+    },
+    {
+      "version": "0.2.5",
+      "publishDate": "2026-06-03T19:42:42.124Z",
+      "unpackedSize": {
+        "value": 202583,
+        "source": "tarball",
+        "available": true
+      },
+      "gzippedSize": {
+        "value": 52612,
+        "source": "tarball",
+        "available": true
+      },
+      "fileCount": {
+        "value": 9,
+        "source": "tarball",
+        "available": true
+      },
+      "moduleFormat": {
+        "value": "esm",
+        "source": "tarball",
+        "available": true
+      },
+      "hasTypes": {
+        "value": true,
+        "source": "tarball",
+        "available": true
+      },
+      "depCount": {
+        "value": 1,
+        "source": "npm-registry-manifest",
+        "available": true
+      },
+      "peerDepCount": {
+        "value": 2,
+        "source": "npm-registry-manifest",
+        "available": true
+      },
+      "installSize": {
+        "value": null,
+        "source": "unavailable",
+        "available": false
+      },
+      "publishSize": {
+        "value": null,
+        "source": "unavailable",
+        "available": false
+      },
+      "downloadsActiveWindow": {
+        "value": 430,
+        "source": "npm-downloads-range-derived",
+        "available": true
+      },
+      "downloadsActiveWindowIsOpenEnded": false,
+      "annotations": []
+    },
+    {
+      "version": "0.2.6",
+      "publishDate": "2026-06-04T17:38:05.252Z",
+      "unpackedSize": {
+        "value": 208293,
+        "source": "tarball",
+        "available": true
+      },
+      "gzippedSize": {
+        "value": 54519,
+        "source": "tarball",
+        "available": true
+      },
+      "fileCount": {
+        "value": 9,
+        "source": "tarball",
+        "available": true
+      },
+      "moduleFormat": {
+        "value": "esm",
+        "source": "tarball",
+        "available": true
+      },
+      "hasTypes": {
+        "value": true,
+        "source": "tarball",
+        "available": true
+      },
+      "depCount": {
+        "value": 1,
+        "source": "npm-registry-manifest",
+        "available": true
+      },
+      "peerDepCount": {
+        "value": 2,
+        "source": "npm-registry-manifest",
+        "available": true
+      },
+      "installSize": {
+        "value": null,
+        "source": "unavailable",
+        "available": false
+      },
+      "publishSize": {
+        "value": null,
+        "source": "unavailable",
+        "available": false
+      },
+      "downloadsActiveWindow": {
+        "value": 0,
+        "source": "npm-downloads-range-derived",
+        "available": true
+      },
+      "downloadsActiveWindowIsOpenEnded": false,
+      "annotations": []
+    },
+    {
+      "version": "0.2.7",
+      "publishDate": "2026-06-04T17:38:58.134Z",
+      "unpackedSize": {
+        "value": 208302,
+        "source": "tarball",
+        "available": true
+      },
+      "gzippedSize": {
+        "value": 54520,
+        "source": "tarball",
+        "available": true
+      },
+      "fileCount": {
+        "value": 9,
+        "source": "tarball",
+        "available": true
+      },
+      "moduleFormat": {
+        "value": "esm",
+        "source": "tarball",
+        "available": true
+      },
+      "hasTypes": {
+        "value": true,
+        "source": "tarball",
+        "available": true
+      },
+      "depCount": {
+        "value": 1,
+        "source": "npm-registry-manifest",
+        "available": true
+      },
+      "peerDepCount": {
+        "value": 2,
+        "source": "npm-registry-manifest",
+        "available": true
+      },
+      "installSize": {
+        "value": null,
+        "source": "unavailable",
+        "available": false
+      },
+      "publishSize": {
+        "value": null,
+        "source": "unavailable",
+        "available": false
+      },
+      "downloadsActiveWindow": {
+        "value": 285,
+        "source": "npm-downloads-range-derived",
+        "available": true
+      },
+      "downloadsActiveWindowIsOpenEnded": false,
+      "annotations": []
+    },
+    {
+      "version": "0.2.8",
+      "publishDate": "2026-06-05T10:20:59.185Z",
+      "unpackedSize": {
+        "value": 230170,
+        "source": "tarball",
+        "available": true
+      },
+      "gzippedSize": {
+        "value": 93857,
+        "source": "tarball",
+        "available": true
+      },
+      "fileCount": {
+        "value": 11,
+        "source": "tarball",
+        "available": true
+      },
+      "moduleFormat": {
+        "value": "esm",
+        "source": "tarball",
+        "available": true
+      },
+      "hasTypes": {
+        "value": true,
+        "source": "tarball",
+        "available": true
+      },
+      "depCount": {
+        "value": 0,
+        "source": "npm-registry-manifest",
+        "available": true
+      },
+      "peerDepCount": {
+        "value": 2,
+        "source": "npm-registry-manifest",
+        "available": true
+      },
+      "installSize": {
+        "value": null,
+        "source": "unavailable",
+        "available": false
+      },
+      "publishSize": {
+        "value": null,
+        "source": "unavailable",
+        "available": false
+      },
+      "downloadsActiveWindow": {
+        "value": 129,
+        "source": "npm-downloads-range-derived",
+        "available": true
+      },
+      "downloadsActiveWindowIsOpenEnded": true,
+      "annotations": []
+    }
+  ],
+  "dailyDownloads": [
+    {
+      "day": "2026-04-18",
+      "downloads": 100
+    },
+    {
+      "day": "2026-04-19",
+      "downloads": 105
+    },
+    {
+      "day": "2026-04-20",
+      "downloads": 113
+    },
+    {
+      "day": "2026-04-21",
+      "downloads": 15
+    },
+    {
+      "day": "2026-04-22",
+      "downloads": 8
+    },
+    {
+      "day": "2026-04-23",
+      "downloads": 5
+    },
+    {
+      "day": "2026-04-24",
+      "downloads": 3
+    },
+    {
+      "day": "2026-04-25",
+      "downloads": 0
+    },
+    {
+      "day": "2026-04-26",
+      "downloads": 1
+    },
+    {
+      "day": "2026-04-27",
+      "downloads": 1
+    },
+    {
+      "day": "2026-04-28",
+      "downloads": 3
+    },
+    {
+      "day": "2026-04-29",
+      "downloads": 0
+    },
+    {
+      "day": "2026-04-30",
+      "downloads": 22
+    },
+    {
+      "day": "2026-05-01",
+      "downloads": 6
+    },
+    {
+      "day": "2026-05-02",
+      "downloads": 1
+    },
+    {
+      "day": "2026-05-03",
+      "downloads": 1
+    },
+    {
+      "day": "2026-05-04",
+      "downloads": 0
+    },
+    {
+      "day": "2026-05-05",
+      "downloads": 0
+    },
+    {
+      "day": "2026-05-06",
+      "downloads": 1
+    },
+    {
+      "day": "2026-05-07",
+      "downloads": 2
+    },
+    {
+      "day": "2026-05-08",
+      "downloads": 1
+    },
+    {
+      "day": "2026-05-09",
+      "downloads": 0
+    },
+    {
+      "day": "2026-05-10",
+      "downloads": 7
+    },
+    {
+      "day": "2026-05-11",
+      "downloads": 118
+    },
+    {
+      "day": "2026-05-12",
+      "downloads": 121
+    },
+    {
+      "day": "2026-05-13",
+      "downloads": 0
+    },
+    {
+      "day": "2026-05-14",
+      "downloads": 14
+    },
+    {
+      "day": "2026-05-15",
+      "downloads": 16
+    },
+    {
+      "day": "2026-05-16",
+      "downloads": 0
+    },
+    {
+      "day": "2026-05-17",
+      "downloads": 1
+    },
+    {
+      "day": "2026-05-18",
+      "downloads": 4
+    },
+    {
+      "day": "2026-05-19",
+      "downloads": 3
+    },
+    {
+      "day": "2026-05-20",
+      "downloads": 2
+    },
+    {
+      "day": "2026-05-21",
+      "downloads": 1
+    },
+    {
+      "day": "2026-05-22",
+      "downloads": 1
+    },
+    {
+      "day": "2026-05-23",
+      "downloads": 0
+    },
+    {
+      "day": "2026-05-24",
+      "downloads": 6
+    },
+    {
+      "day": "2026-05-25",
+      "downloads": 5
+    },
+    {
+      "day": "2026-05-26",
+      "downloads": 122
+    },
+    {
+      "day": "2026-05-27",
+      "downloads": 22
+    },
+    {
+      "day": "2026-05-28",
+      "downloads": 27
+    },
+    {
+      "day": "2026-05-29",
+      "downloads": 3
+    },
+    {
+      "day": "2026-05-30",
+      "downloads": 3
+    },
+    {
+      "day": "2026-05-31",
+      "downloads": 1
+    },
+    {
+      "day": "2026-06-01",
+      "downloads": 3
+    },
+    {
+      "day": "2026-06-02",
+      "downloads": 20
+    },
+    {
+      "day": "2026-06-03",
+      "downloads": 430
+    },
+    {
+      "day": "2026-06-04",
+      "downloads": 285
+    },
+    {
+      "day": "2026-06-05",
+      "downloads": 129
+    },
+    {
+      "day": "2026-06-06",
+      "downloads": 0
+    }
+  ],
+  "github": {
+    "value": {
+      "stars": 0,
+      "forks": 0,
+      "releases": []
+    },
+    "source": "github-api",
+    "available": true
+  },
+  "summary": {
+    "latestVersion": "0.2.8",
+    "latestWeeklyDownloads": 871,
+    "latestUnpackedSize": 230170,
+    "latestDepCount": 0,
+    "packageAgeDays": 48,
+    "totalVersions": 13
+  },
+  "dataSourceStatus": {
+    "registry": "ok",
+    "downloads": "ok",
+    "tarballs": "ok",
+    "packagephobia": "unavailable",
+    "github": "ok"
+  },
+  "caveats": [
+    "\"Downloads during active period\" is a trend estimate (daily downloads summed between release dates) — NOT a per-version measurement.",
+    "Latest version download window is open-ended (no successor) — figure will keep growing."
+  ]
+}
