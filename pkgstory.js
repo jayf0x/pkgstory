@@ -65,6 +65,8 @@ async function main() {
   } else {
     process.stdout.write(result.svg);
   }
+
+  process.exit(0); // force-close fetch keepalive connections
 }
 
 main().catch(err => {

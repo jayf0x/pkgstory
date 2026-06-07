@@ -1,35 +1,45 @@
 /**
- * Pipeline smoke test — @jayf0x/fluidity-js
- * Run: node test.js
+ * Pipeline smoke test
+ * Run: node test.js [package] [--skip-tarballs]
+ * Examples:
+ *   node test.js
+ *   node test.js react --skip-tarballs
+ *   node test.js ms
  */
 import * as fs from 'node:fs';
 import { runPipeline } from './lib/pipeline.js';
 
-const PKG = '@jayf0x/fluidity-js';
-const OUT_SVG  = 'fluidity-js.svg';
-const OUT_JSON = 'fluidity-js.json';
+const args = process.argv.slice(2);
+const PKG = args.find(a => !a.startsWith('-')) ?? '@jayf0x/fluidity-js';
+const skipTarballs = args.includes('--skip-tarballs');
+const slug = PKG.replace(/\//g, '-').replace(/^@/, '');
+const OUT_SVG  = `${slug}.svg`;
+const OUT_JSON = `${slug}.json`;
 
-console.log(`\n▶ pkgstory test: ${PKG}\n`);
+console.log(`\n▶ pkgstory test: ${PKG}${skipTarballs ? ' (--skip-tarballs)' : ''}\n`);
 
 const start = Date.now();
 
-const result = await runPipeline(PKG, {
-  skipTarballs: false,
-  onProgress: (stage, msg, pct) => {
-    const pctStr = pct != null ? ` ${pct}%` : '';
-    process.stderr.write(`  [${stage}]${pctStr} ${msg}\n`);
-  },
-}).catch(err => {
+let result;
+try {
+  result = await runPipeline(PKG, {
+    skipTarballs,
+    onProgress: (stage, msg, pct) => {
+      const pctStr = pct != null ? ` ${pct}%` : '';
+      process.stderr.write(`  [${stage}]${pctStr} ${msg}\n`);
+    },
+  });
+} catch (err) {
   console.error(`\n✗ Pipeline failed: ${err?.message ?? err}`);
   process.exit(1);
-});
+}
 
 const elapsed = ((Date.now() - start) / 1000).toFixed(1);
 
-fs.writeFileSync(OUT_SVG, result.svg, 'utf8');
+fs.writeFileSync(OUT_SVG,  result.svg, 'utf8');
 fs.writeFileSync(OUT_JSON, JSON.stringify(result.timeline, null, 2), 'utf8');
 
-const s = result.timeline.summary;
+const s  = result.timeline.summary;
 const ds = result.timeline.dataSourceStatus;
 
 console.log(`\n✓ Done in ${elapsed}s`);
@@ -46,5 +56,6 @@ for (const [k, v] of Object.entries(ds)) {
   console.log(`    ${icon} ${k}: ${v}`);
 }
 console.log(`\n  SVG  → ${OUT_SVG}`);
-console.log(`  JSON → ${OUT_JSON}`);
-console.log('');
+console.log(`  JSON → ${OUT_JSON}\n`);
+
+process.exit(0); // force-close fetch keepalive connections
